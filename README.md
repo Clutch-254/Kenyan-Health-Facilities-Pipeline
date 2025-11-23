@@ -1,6 +1,6 @@
 # Kenyan Health Facilities: A Data Science Pipeline
 
-Welcome! This project is a hands-on demonstration of a simple, end-to-end data science pipeline. We're using a real-world dataset of health facilities in Kenya to show how you can automatically fetch, clean, and prepare data for machine learning.
+This project is a hands-on demonstration of a simple, end-to-end data science pipeline. I using a real-world dataset of health facilities in Kenya to show how you can automatically fetch, clean, and prepare data for machine learning.
 
 ## 🚀 What's Inside?
 
