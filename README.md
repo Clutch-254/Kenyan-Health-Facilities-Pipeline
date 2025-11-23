@@ -2,7 +2,7 @@
 
 This project is a hands-on demonstration of a simple, end-to-end data science pipeline. I am using a real-world dataset of health facilities in Kenya to show how you can automatically fetch, clean, and prepare data for machine learning.
 
-## 🚀 What's Inside?
+##  What's Inside?
 
 This project is organized into a few key directories:
 
@@ -11,7 +11,7 @@ This project is organized into a few key directories:
 *   `src/`: The heart of the project. This directory holds all the Python scripts that make up our pipeline.
 *   `tests/`: For tests (currently empty, but a good practice to have!).
 
-## 🏁 Getting Started
+##  Getting Started
 
 Ready to run the pipeline yourself? Here's how:
 
@@ -35,7 +35,7 @@ python3 -m src.main
 
 This will kick off the whole process, from downloading the data to training the model.
 
-## 🔧 Pipeline Steps
+##  Pipeline Steps
 
 The pipeline is made up of a few key steps, each with its own script in the `src/` directory:
 
@@ -44,7 +44,7 @@ The pipeline is made up of a few key steps, each with its own script in the `src
 3.  **Feature Engineering (`feature_engineering.py`):** We then create features that can be used by a machine learning model. In this case, we're using one-hot encoding to convert categorical variables into a numerical format.
 4.  **Model Training (`model_training.py`):** Finally, we train a machine learning model on our processed data.
 
-## 🤖 The Model
+##  The Model
 
 We're training a `RandomForestClassifier` to predict whether a health facility is a "Level 2" facility. This is a simple classification task to demonstrate the final step of the pipeline. The trained model is saved to the `data/processed/` directory.
 
