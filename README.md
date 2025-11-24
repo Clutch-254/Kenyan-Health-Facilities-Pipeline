@@ -50,6 +50,4 @@ We're training a `RandomForestClassifier` to predict whether a health facility i
 
 After running the pipeline, you'll see a classification report in your terminal that shows how well the model performed.
 
----
 
-We hope this gives you a clear idea of what this project is all about. Feel free to explore the code and adapt it for your own data science projects!
