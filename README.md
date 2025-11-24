@@ -48,6 +48,23 @@ The pipeline is made up of a few key steps, each with its own script in the `src
 
 We're training a `RandomForestClassifier` to predict whether a health facility is a "Level 2" facility. This is a simple classification task to demonstrate the final step of the pipeline. The trained model is saved to the `data/processed/` directory.
 
+## Recent Changes
+
+### Enhanced Data Ingestion
+The data ingestion process has been made more robust:
+- **Retries:** The `tenacity` library has been integrated to automatically retry downloading the dataset in case of network issues.
+- **Error Handling:** `try/except` blocks have been added to catch and log any exceptions during the download process, ensuring the pipeline fails gracefully.
+
+### Advanced Model Training
+The model training process has been improved with hyperparameter tuning:
+- **GridSearchCV:** `GridSearchCV` is now used to find the best hyperparameters for the `RandomForestClassifier` using 5-fold cross-validation.
+- **Evaluation:** The best model is evaluated on a separate test set to provide a more accurate measure of its performance.
+
+### Comprehensive Unit Testing
+Unit tests have been added to ensure the reliability of the pipeline:
+- **Test Coverage:** Tests have been created for the data processing and model training modules.
+- **Mocking:** `pytest` and `pytest-mock` are used to mock external dependencies, allowing for isolated and reliable tests.
+
 After running the pipeline, you'll see a classification report in your terminal that shows how well the model performed.
 
 
