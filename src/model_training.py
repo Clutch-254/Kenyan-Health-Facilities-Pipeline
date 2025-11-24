@@ -1,8 +1,10 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 import joblib
+from imblearn.pipeline import Pipeline
+from imblearn.over_sampling import SMOTE
 from src import config
 
 def train_model():
@@ -12,29 +14,30 @@ def train_model():
     df = pd.read_csv(features_path)
 
     # Define features (X) and target (y)
-    processed_data_path = config.PROCESSED_DATA_DIR / "kenya-health-facilities-processed.csv"
-    df_processed = pd.read_csv(processed_data_path)
-    
-    df['target'] = (df_processed['Keph level'] == 'Level 2').astype(int)
-    
-    X = df.drop(columns=['target'])
-    y = df['target']
+    y = df['Keph level']
+    X = df.drop(columns=['Keph level'])
 
     # Split data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
-    # Define the parameter grid
+    # Define the pipeline with SMOTE and RandomForestClassifier
+    pipeline = Pipeline([
+        ('smote', SMOTE(random_state=42)),
+        ('classifier', RandomForestClassifier(random_state=42))
+    ])
+
+    # Define the parameter grid for GridSearchCV
     param_grid = {
-        'n_estimators': [100, 200],
-        'max_depth': [None, 10, 20],
-        'min_samples_split': [2, 5]
+        'classifier__n_estimators': [100, 200],
+        'classifier__max_depth': [10, 20, None],
+        'classifier__min_samples_split': [2, 5]
     }
 
-    # Create a RandomForestClassifier
-    rf = RandomForestClassifier(random_state=42)
+    # Create StratifiedKFold for cross-validation
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
     # Create a GridSearchCV object
-    grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2)
+    grid_search = GridSearchCV(estimator=pipeline, param_grid=param_grid, cv=cv, n_jobs=-1, verbose=2, scoring='f1', error_score='raise')
 
     # Fit the grid search to the data
     grid_search.fit(X_train, y_train)

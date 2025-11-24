@@ -9,7 +9,7 @@ This project is organized into a few key directories:
 *   `data/`: This is where all the data lives. It's split into `raw/` for the original, untouched data, and `processed/` for the cleaned-up data and features.
 *   `notebooks/`: Contains Jupyter notebooks for exploratory data analysis (EDA). This is where we get to know the data before we start building the pipeline.
 *   `src/`: The heart of the project. This directory holds all the Python scripts that make up our pipeline.
-*   `tests/`: For tests (currently empty, but a good practice to have!).
+*   `tests/`: Contains unit tests for the data processing and model training modules.
 
 ##  Getting Started
 
