@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 import joblib
@@ -12,13 +12,6 @@ def train_model():
     df = pd.read_csv(features_path)
 
     # Define features (X) and target (y)
-    # We need to select the correct target column. 
-    # Since we one-hot encoded the 'Keph level', we will have multiple 'Keph level_*' columns.
-    # Let's choose 'Keph level_Unknown' as the target for this example.
-    # In a real-world scenario, you would handle the multi-class target appropriately.
-    
-    # For simplicity, we will predict if 'Keph level' is 'Level 2'
-    # First, let's load the processed data to get the original 'Keph level'
     processed_data_path = config.PROCESSED_DATA_DIR / "kenya-health-facilities-processed.csv"
     df_processed = pd.read_csv(processed_data_path)
     
@@ -30,18 +23,33 @@ def train_model():
     # Split data into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Train a RandomForestClassifier
-    model = RandomForestClassifier(random_state=42)
-    model.fit(X_train, y_train)
+    # Define the parameter grid
+    param_grid = {
+        'n_estimators': [100, 200],
+        'max_depth': [None, 10, 20],
+        'min_samples_split': [2, 5]
+    }
+
+    # Create a RandomForestClassifier
+    rf = RandomForestClassifier(random_state=42)
+
+    # Create a GridSearchCV object
+    grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2)
+
+    # Fit the grid search to the data
+    grid_search.fit(X_train, y_train)
+
+    # Get the best model
+    best_model = grid_search.best_estimator_
 
     # Evaluate the model
-    y_pred = model.predict(X_test)
+    y_pred = best_model.predict(X_test)
     print("Classification Report:")
     print(classification_report(y_test, y_pred))
 
     # Save the model
     model_path = config.PROCESSED_DATA_DIR / "model.joblib"
-    joblib.dump(model, model_path)
+    joblib.dump(best_model, model_path)
     print(f"Model saved to {model_path}")
 
 if __name__ == "__main__":
