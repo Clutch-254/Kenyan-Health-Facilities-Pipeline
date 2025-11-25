@@ -55,6 +55,15 @@ To ensure the quality and integrity of the data, the pipeline now includes:
 
 We're training a `RandomForestClassifier` to predict whether a health facility is a "Level 2" facility. This is a simple classification task to demonstrate the final step of the pipeline. The trained model is saved to the `data/processed/` directory.
 
+## Advanced Model Evaluation
+
+To provide a more comprehensive understanding of the model's performance, the following evaluation features have been added:
+
+*   **Confusion Matrix Analysis:** A confusion matrix is generated to visualize the model's performance in classifying different classes. The heatmap is saved as `reports/confusion_matrix.png`.
+*   **Precision-Recall and F1-Score:** A detailed classification report is generated, including precision, recall, and F1-score for each class. This provides a more nuanced view of the model's performance, especially with imbalanced data.
+*   **Feature Importance Visualization:** A bar plot of feature importances is created to understand which features are most influential in the model's predictions. The plot is saved as `reports/feature_importance.png`.
+*   **Saved Evaluation Metrics:** All evaluation metrics, including the classification report and confusion matrix, are saved to `reports/evaluation_metrics.json` for tracking and comparison over time.
+
 ## Recent Changes
 
 ### Enhanced Data Ingestion
