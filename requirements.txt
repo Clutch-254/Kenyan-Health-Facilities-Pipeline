@@ -3,3 +3,6 @@ scikit-learn
 jupyter
 openpyxl
 requests
+pandera
+ydata-profiling
+tenacity
