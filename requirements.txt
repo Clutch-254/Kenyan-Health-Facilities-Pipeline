@@ -6,3 +6,4 @@ requests
 pandera
 ydata-profiling
 tenacity
+imblearn
