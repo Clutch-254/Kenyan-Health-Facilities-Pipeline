@@ -20,8 +20,8 @@ Ready to run the pipeline yourself? Here's how:
 First, you'll need to create a virtual environment and install the required packages.
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -33,7 +33,7 @@ Once your environment is set up, you can run the entire pipeline with a single c
 python3 -m src.main
 ```
 
-This will kick off the whole process, from downloading the data to training the model.
+This will kick off the whole process, from downloading the data to training the model. A data profiling report will be generated at `reports/health_facilities_profile.html`.
 
 ##  Pipeline Steps
 
@@ -43,6 +43,13 @@ The pipeline is made up of a few key steps, each with its own script in the `src
 2.  **Data Preprocessing (`data_processing.py`):** Next, we clean up the data. This involves removing unnecessary columns, filling in missing values, and converting some columns to a more useful format.
 3.  **Feature Engineering (`feature_engineering.py`):** We then create features that can be used by a machine learning model. In this case, we're using one-hot encoding to convert categorical variables into a numerical format.
 4.  **Model Training (`model_training.py`):** Finally, we train a machine learning model on our processed data.
+
+## Data Quality and Validation
+
+To ensure the quality and integrity of the data, the pipeline now includes:
+
+*   **Schema Validation:** `pandera` is used to validate the data against a predefined schema. This checks for correct data types, non-null values, and ensures that the `Code` column (MFL Code) is unique for each facility.
+*   **Automated Data Profiling:** `ydata-profiling` is used to generate a detailed data profile report. This report provides a comprehensive overview of the dataset, including descriptive statistics, distributions, and correlations. The report is saved as `reports/health_facilities_profile.html`.
 
 ##  The Model
 
